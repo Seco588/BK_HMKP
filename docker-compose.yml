@@ -1,0 +1,41 @@
+## YAML Template.
+---
+version: '3.8'
+services:
+  app:
+    build: .
+    image: myapp:latest # Opzionale, personalizza il nome dell'immagine
+    container_name: myapp # Opzionale, personalizza il nome del container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://username:password@mongo:27017/nome_del_tuo_database
+    # command: Opzionale, sovrascrive il comando predefinito nel Dockerfile
+    # entrypoint: Opzionale, sovrascrive l'entrypoint predefinito nel Dockerfile
+    # volumes: Opzionale, elenca i volumi da montare nel container
+    # networks: Opzionale, elenca le reti a cui il servizio deve appartenere
+  mongo:
+    image: "mongo:4.4"
+    container_name: mymongo # Opzionale, personalizza il nome del container
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=username
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    # command: Opzionale, sovrascrive il comando predefinito nell'immagine
+    # entrypoint: Opzionale, sovrascrive l'entrypoint predefinito nell'immagine
+    # networks: Opzionale, elenca le reti a cui il servizio deve appartenere
+
+volumes:
+  mongo-data:
+
+# networks: Opzionale, definisci reti personalizzate per il tuo progetto
+
+# configs: Opzionale, definisci configurazioni condivise tra i servizi
+
+# secrets: Opzionale, definisci segreti condivisi tra i servizi
+
